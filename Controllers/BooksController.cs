@@ -1,59 +1,54 @@
 
 using Microsoft.AspNetCore.Mvc;
 namespace project.Controllers;
+using project.Interfaces;
+
 [ApiController]
 [Route("[controller]")]
 public class BooksController : ControllerBase
 {
-    private static List<Book> list;
-    static BooksController()
+    private  IBookService bookService;
+    public BooksController (IBookService bookService)
     {
-        list = new List<Book> 
-        {
-            new Book { Id = 1, Name = "math" ,Category=CategoryBooks.Textbook},
-            new Book { Id = 2, Name = "With a nation builder", Category = CategoryBooks.History},
-            new Book { Id = 3, Name = "The country", Category = CategoryBooks.Philosophy}
-        };
+        this.bookService = bookService;
     }
     [HttpGet]
-    public IEnumerable<Book> Get()
-    {
-        return list;
-    }
+     public ActionResult<List<Book>> GetAll() =>
+             bookService.GetAll();
+    
     [HttpGet("{id}")]
     public ActionResult<Book> Get(int id)
     {
-        var book = list.FirstOrDefault(b => b.Id == id);
-        if (book == null)
-            return BadRequest("invalid id");
-        return book;
+            var book = bookService.Get(id);
+            if (book == null)
+                return NotFound();
+            return book;
     }
     [HttpPost] 
     public ActionResult Insert(Book nb)
     {        
-        var maxId = list.Max(b => b.Id);
-        nb.Id = maxId + 1;
-        list.Add(nb);
-        return CreatedAtAction(nameof(Insert), new { id = nb.Id }, nb);
+       bookService.Add(nb);
+       return CreatedAtAction(nameof(Insert), new {id=nb.Id}, nb);
     }  
     [HttpPut("{id}")]
     public ActionResult Update(int id, Book nb)
     { 
-        var oldBook = list.FirstOrDefault(b => b.Id == id);
-        if (oldBook == null) 
-            return BadRequest("invalid id");
-        if (nb.Id != oldBook.Id)
-            return BadRequest("id mismatch");
-        oldBook.Name = nb.Name;
-        oldBook.Category = nb.Category;
-        return NoContent();
+        if(id != nb.Id)  
+           return BadRequest();
+
+        var existingBook = bookService.Get(id);
+
+        if(existingBook is null)
+           return NotFound();
+        bookService.Update(existingBook);
+           return NoContent();
     } 
    [HttpDelete("{id}")]
    public ActionResult Delete(int id){
-        var foundBook = list.FirstOrDefault(b => b.Id == id);
-         if (foundBook == null) 
-            return BadRequest("invalid id");
-        list.Remove(foundBook);
-        return NoContent();
+        var foundBook = bookService.Get(id);
+         if (foundBook is null) 
+           return  NotFound();
+        bookService.Delete(id);
+        return Content(bookService.Count.ToString());
    }
 }
