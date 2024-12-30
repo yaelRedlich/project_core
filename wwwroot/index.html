@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -12,6 +13,15 @@
     <h3>Add</h3>
     <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
         <input type="text" id="add-name" placeholder="New Book">
+        <select id="add-category">
+            <option value="" disabled selected>Choose a category</option>
+            <option value="0">Biography</option>
+            <option value="1">Textbook</option>
+            <option value="2">Tension</option>
+            <option value="3">History</option>
+            <option value="4">Science</option>
+            <option value="5">Philosophy</option>
+        </select>
         <input type="submit" value="Add">
     </form>
 
@@ -21,12 +31,13 @@
             <input type="hidden" id="edit-id">
             <input type="text" id="edit-name">
             <select id="edit-category">
-                <option value="Biography">Biography</option>
-                <option value="Textbook">Textbook</option>
-                <option value="Tension">Tension</option>
-                <option value="History">History</option>
-                <option value="Science">Science</option>
-                <option value="Philosophy">Philosophy</option>
+                <option value="" disabled selected>Choose a category</option>
+                <option value="0">Biography</option>
+                <option value="1">Textbook</option>
+                <option value="2">Tension</option>
+                <option value="3">History</option>
+                <option value="4">Science</option>
+                <option value="5">Philosophy</option>
             </select>
             <input type="submit" value="Save">
             <a onclick="closeInput()" aria-label="Close">&#10006;</a>

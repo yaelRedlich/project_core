@@ -40,7 +40,7 @@ public class BooksController : ControllerBase
 
         if(existingBook is null)
            return NotFound();
-        bookService.Update(existingBook);
+        bookService.Update(nb);
            return NoContent();
     } 
    [HttpDelete("{id}")]
