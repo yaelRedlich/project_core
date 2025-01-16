@@ -3,8 +3,9 @@ using project;
 using project.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-namespace project_core.Services;
- 
+using Microsoft.Extensions.DependencyInjection;
+namespace project_core.Services
+{
    public class BookService :IBookService
     {
         List<Book> listbooks { get; }
@@ -48,4 +49,13 @@ namespace project_core.Services;
 
         public int Count { get =>  listbooks.Count(); }
     }
+    public static class BookServiceHelper
+    {
+        public static void AddPizzaService(this IServiceCollection services)
+        {
+            services.AddSingleton<IBookService , BookService>();    
+        }
+    }
+    
+}
  
