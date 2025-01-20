@@ -22,8 +22,16 @@ namespace project_core.Services
 
         public List<Book> GetAll() => listbooks;
 
-        public Book? Get(int id) => listbooks.FirstOrDefault(b => b.Id == id);
-
+        //public Book? Get(int id) => listbooks.FirstOrDefault(b => b.Id == id);
+        public Book Get(int id)
+        {
+           var book = listbooks.FirstOrDefault(b => b.Id == id);
+           if (book == null)
+         {
+           throw new IndexOutOfRangeException($"Book with ID {id} does not exist.");
+         }
+            return book;
+        }
         public void Add(Book book)
         {
             book.Id = nextId++;
