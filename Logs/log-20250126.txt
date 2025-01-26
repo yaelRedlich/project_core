@@ -1,0 +1,14 @@
+2025-01-26 00:40:00.090 +02:00 [INF] Now listening on: http://localhost:5073
+2025-01-26 00:40:00.136 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-26 00:40:00.138 +02:00 [INF] Hosting environment: Development
+2025-01-26 00:40:00.139 +02:00 [INF] Content root path: C:\Users\user1\Desktop\dotnet\project_core
+2025-01-26 00:40:07.827 +02:00 [INF] Request starting HTTP/1.1 DELETE http://localhost:5073/Books/3 - null null
+2025-01-26 00:40:07.850 +02:00 [INF] Handling request: DELETE /Books/3
+2025-01-26 00:40:07.855 +02:00 [WRN] Failed to determine the https port for redirect.
+2025-01-26 00:40:07.860 +02:00 [INF] Executing endpoint 'project.Controllers.BooksController.Delete (project_core)'
+2025-01-26 00:40:07.875 +02:00 [INF] Route matched with {action = "Delete", controller = "Books"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Delete(Int32) on controller project.Controllers.BooksController (project_core).
+2025-01-26 00:40:07.885 +02:00 [INF] Executing ContentResult with HTTP Response ContentType of text/plain; charset=utf-8
+2025-01-26 00:40:07.890 +02:00 [INF] Executed action project.Controllers.BooksController.Delete (project_core) in 9.1787ms
+2025-01-26 00:40:07.895 +02:00 [INF] Executed endpoint 'project.Controllers.BooksController.Delete (project_core)'
+2025-01-26 00:40:07.896 +02:00 [INF] Finished handling request: DELETE /Books/3, Response Status: 200
+2025-01-26 00:40:07.898 +02:00 [INF] Request finished HTTP/1.1 DELETE http://localhost:5073/Books/3 - 200 1 text/plain; charset=utf-8 71.8186ms
