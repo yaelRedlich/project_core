@@ -1,11 +1,14 @@
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\appsettings.json
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Data\books.json
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Data\users.json
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\project_core.staticwebassets.runtime.json
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\project_core.exe
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\project_core.deps.json
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\project_core.runtimeconfig.json
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\project_core.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\project_core.pdb
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Binder.dll
@@ -19,6 +22,11 @@ C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.Extensions
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Serilog.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Serilog.AspNetCore.dll
@@ -34,6 +42,7 @@ C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Swashbuckle.AspNetCo
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\System.IO.Pipelines.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\System.Text.Encodings.Web.dll
 C:\Users\user1\Desktop\dotnet\project_core\bin\Debug\net8.0\System.Text.Json.dll

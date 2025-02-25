@@ -1,20 +1,21 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 namespace project.Interfaces
 {
     public interface IBookService
     {
-        List<Book> GetAll();
+        IEnumerable<Book> GetAll(string ? token);
 
-        Book ?Get(int id);
+        Book ?Get(int id, string? token);
 
-        void Add(Book book);
+        void Add(Book task, string? token);
 
-        void Delete(int id);
+        void Delete(int id, string? token);
 
-        void Update(Book book);
-
-        int Count { get;}  //
+        void Update(int id,  Book newBook ,string? token);
+        void DeleteByUserId(int userId);
+        int Count { get;}  
     }
 }

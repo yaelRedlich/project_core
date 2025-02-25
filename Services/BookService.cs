@@ -4,66 +4,103 @@ using project.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using project_core.Helpers;
+using System.IdentityModel.Tokens.Jwt;
 namespace project_core.Services
 {
-   public class BookService :IBookService
+    public class BookService : IBookService
     {
+        private readonly string _filePath = "Books.json";
         List<Book> listbooks { get; }
         int nextId = 4;
+
         public BookService()
         {
-            listbooks = new List<Book>
-            {
-              new Book { Id = 1, Name = "math" ,Category=CategoryBooks.Textbook},
-              new Book { Id = 2, Name = "With a nation builder", Category = CategoryBooks.History},
-              new Book { Id = 3, Name = "The country", Category = CategoryBooks.Philosophy}
-            };
+
+            listbooks = FileHelper<Book>.ReadFromJson();
+            nextId = listbooks.Any() ? listbooks.Max(b => b.Id) + 1 : 1;
         }
 
-        public List<Book> GetAll() => listbooks;
-
-        //public Book? Get(int id) => listbooks.FirstOrDefault(b => b.Id == id);
-        public Book Get(int id)
+        //  public IEnumerable <Book> GetAll (string ? token) => listbooks.Where((book)=>book.UserId==int.Parse(TokenService.decodedToken(token)));
+        public IEnumerable<Book> GetAll(string? token)
         {
-           var book = listbooks.FirstOrDefault(b => b.Id == id);
-           if (book == null)
-         {
-           throw new IndexOutOfRangeException($"Book with ID {id} does not exist.");
-         }
+            int userId = int.Parse(TokenService.decodedToken(token, "UserId"));
+            bool isAdmin = bool.Parse(TokenService.decodedToken(token, "isAdmin"));
+            if (isAdmin) // אם המשתמש הוא מנהל, נחזיר את כל הספרים
+            {
+                return listbooks;
+            }
+
+            // אחרת, נחזיר רק את הספרים של המשתמש
+            return listbooks.Where(book => book.UserId == userId);
+        }
+
+        public Book Get(int id, string? token)
+        {
+            var book = listbooks.FirstOrDefault(b => b.Id == id);
+            bool isAdmin = bool.Parse(TokenService.decodedToken(token, "isAdmin"));
+
+            if (book == null || (!isAdmin && book.UserId != int.Parse(TokenService.decodedToken(token))))
+            {
+                throw new IndexOutOfRangeException($"Book with ID {id} does not exist.");
+            }
             return book;
         }
-        public void Add(Book book)
+        public void Add(Book book, string? token)
         {
             book.Id = nextId++;
+            book.UserId = int.Parse(TokenService.decodedToken(token));
             listbooks.Add(book);
+            FileHelper<Book>.WriteToJson(listbooks);
+
         }
 
-        public void Delete(int id)
+        public void Delete(int id, string? token)
         {
-            var book = Get(id);
-            if(book is null)
-                return;
+            int userId = int.Parse(TokenService.decodedToken(token));
+            var book = Get(id, token);
+            if (book == null || userId != book.UserId)
+            {
+                throw new Exception("אינך מורה לגשת לאזור זה ");
+            }
             listbooks.Remove(book);
-        }
+            FileHelper<Book>.WriteToJson(listbooks);
 
-        public void Update(Book book)
+        }
+        public void DeleteByUserId(int id)
         {
-            var index = listbooks.FindIndex(b => b.Id == book.Id);
-            if(index == -1)
-                return;
-
-            listbooks[index] = book;
+            listbooks.RemoveAll(book => book.UserId == id);
+            FileHelper<Book>.WriteToJson(listbooks);
         }
 
-        public int Count { get =>  listbooks.Count(); }
+        public void Update(int id, Book newBook, string? token)
+        {
+            int userId = int.Parse(TokenService.decodedToken(token));
+            var index = listbooks.FindIndex(b => b.Id == newBook.Id);
+            bool isAdmin =bool.Parse(TokenService.decodedToken(token,"isAdmin"));
+            if (index == -1)
+                return;
+            if ((listbooks[index].UserId != userId && !isAdmin) || (newBook.UserId != listbooks[index].UserId && !isAdmin))
+            {
+                throw new Exception("אינך מורשה לגשת לאזור זה ");
+            }
+            listbooks[index] = newBook;
+            FileHelper<Book>.WriteToJson(listbooks);
+
+        }
+
+        public int Count { get => listbooks.Count(); }
+
     }
     public static class BookServiceHelper
     {
-        public static void AddPizzaService(this IServiceCollection services)
+        public static void AddBookService(this IServiceCollection services)
         {
-            services.AddSingleton<IBookService , BookService>();    
+            services.AddSingleton<IBookService, BookService>();
         }
     }
-    
+
 }
- 

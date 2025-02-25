@@ -1,0 +1,32 @@
+[
+  {
+    "UserId": 0,
+    "Username": "yael",
+    "Password": "111",
+    "isAdmin": true
+  },
+  {
+    "UserId": 2,
+    "Username": "hadasa",
+    "Password": "1234",
+    "isAdmin": false
+  },
+  {
+    "UserId": 3,
+    "Username": "rut",
+    "Password": "12345",
+    "isAdmin": false
+  },
+  {
+    "UserId": 6,
+    "Username": "vvbn",
+    "Password": "5474",
+    "isAdmin": false
+  },
+  {
+    "UserId": 8,
+    "Username": "vvbn",
+    "Password": "6797",
+    "isAdmin": false
+  }
+]

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="css/user.css">
+</head>
+
+<body>
+    <h4>שלום משתמש <span id="userName"></span></h4>
+    <h1>User Management</h1>
+    <h3>Add User</h3>
+    <form action="javascript:void(0);" onsubmit="addItem()">
+        <input type="text" id="add-username" placeholder="Username" required>
+        <input type="password" id="add-password" placeholder="Password" required>
+        <label for="add-role">Admin</label>
+        <input type="checkbox" id="add-role">
+        <input type="submit" value="Add">
+    </form>
+
+    <h3>Users List</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Role (Admin)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="users"></tbody>
+    </table>
+
+  
+
+    <script src="./js/user.js" asp-append-version="true">
+        getItems();
+    </script>
+</body>
+
+</html>

@@ -22,7 +22,7 @@ public class ErrorHandlingMiddleware
        
         catch (Exception ex)
         {
-            await HandleExceptionAsync(context, 500, "An unexpected error occurred.");
+            await HandleExceptionAsync(context, 500, "An unexpected error occurred."+ex);
         }
     }
 

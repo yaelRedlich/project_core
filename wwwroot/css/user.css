@@ -1,28 +1,3 @@
-/* input[type='submit'],
-button,
-[aria-label] {
-    cursor: pointer;
-}
-
-#editForm {
-    display: none;
-}
-
-table {
-    font-family: Arial, sans-serif;
-    border: 1px solid;
-    border-collapse: collapse;
-}
-
-th {
-    background-color: #f8f8;
-    padding: 5px;
-}
-
-td {
-    border: 1px solid;
-    padding: 5px;
-} */
 body {
     font-family: "Heebo", sans-serif;
     background: #f8f9fa;
@@ -67,7 +42,7 @@ tr:hover {
     max-width: 350px;
     margin-bottom: 20px;
 }
-input, select {
+input {
     padding: 6px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -104,7 +79,4 @@ input[type="submit"]:hover {
 .delete-btn {
     background: #d32f2f;
     color: white;
-}
-#editForm {
-    display: none;
 }

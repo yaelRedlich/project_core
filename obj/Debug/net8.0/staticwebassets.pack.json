@@ -1,16 +1,48 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\admin.html",
+      "PackagePath": "staticwebassets\\admin.html"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\book.html",
+      "PackagePath": "staticwebassets\\book.html"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\css\\admin.css",
+      "PackagePath": "staticwebassets\\css\\admin.css"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\css\\index.css",
+      "PackagePath": "staticwebassets\\css\\index.css"
+    },
+    {
       "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\css\\user.css",
+      "PackagePath": "staticwebassets\\css\\user.css"
     },
     {
       "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\js\\login.js",
+      "PackagePath": "staticwebassets\\js\\login.js"
+    },
+    {
       "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\js\\user.js",
+      "PackagePath": "staticwebassets\\js\\user.js"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\dotnet\\project_core\\wwwroot\\user.html",
+      "PackagePath": "staticwebassets\\user.html"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.project_core.props",
