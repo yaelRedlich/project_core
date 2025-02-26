@@ -2,8 +2,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace project_core.Services
@@ -48,8 +46,5 @@ namespace project_core.Services
             var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
             return jsonToken?.Claims.FirstOrDefault(c => c.Type == claimType)?.Value ?? throw new Exception("Claim not found");
         }
-
-
-
     }
 }

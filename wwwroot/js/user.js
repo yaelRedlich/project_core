@@ -1,11 +1,10 @@
 const uri = '/User';
-const token = sessionStorage.getItem('token'); // מקבל את ה-token ששמרת ב-sessionStorage
+const token = sessionStorage.getItem('token'); 
 
 if (token) {
     const payload = token.split('.')[1];
     const decodedPayload = atob(payload);
     const jsonPayload = JSON.parse(decodedPayload);
- //   const userId = jsonPayload.UserId;
     const userId = parseInt(jsonPayload.UserId, 10);
     jsonPayload.UserId=userId;
     showUserName(userId);
@@ -27,7 +26,6 @@ function showUserName(id){
         return response.json();
     })
     .then(data => {
-        console.log(data);
         userName.innerHTML=data.username});
 }
 
@@ -101,27 +99,21 @@ function _displayItems(data) {
         let role = document.createElement('label');
         role.textContent = item.isAdmin ? 'Admin' : 'User';
         let deleteButton = button.cloneNode(false);
-        deleteButton.innerText = 'Delete';
+        deleteButton.innerText = 'מחיקה';
         deleteButton.setAttribute('onclick', `deleteItem(${item.userId})`);
-
+        
         let tr = tBody.insertRow();
-
         let td1 = tr.insertCell(0);
         td1.appendChild(document.createTextNode(item.userId));
-
         let td2 = tr.insertCell(1);
         td2.appendChild(document.createTextNode(item.username));
-
         let td3 = tr.insertCell(2);
         td3.appendChild(document.createTextNode(item.password));
-
         let td4 = tr.insertCell(3);
         td4.appendChild(role);
-
         let td5 = tr.insertCell(4);
         td5.appendChild(deleteButton);
     });
 }
 
-// התחל את הצגת המשתמשים
 getItems();

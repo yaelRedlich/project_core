@@ -14,7 +14,7 @@ namespace project_core.Services
     public class UserService : IUserService
     {
         List<User> listUsers { get; }
-        int nextId = 4;
+        int nextId = 11;
         public UserService()
         {
              listUsers = FileHelper<User>.ReadFromJson();
@@ -33,7 +33,6 @@ namespace project_core.Services
             {
                 new Claim("UserId", findUser.UserId+""),
                 new Claim("userName", findUser.Username),
-               // new Claim("isAdmin", findUser.isAdmin+"") 
                 new Claim("isAdmin", findUser.isAdmin ? "true" : "false")
 
             };

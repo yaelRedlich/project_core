@@ -32,16 +32,16 @@ namespace project.Controllers
 
         [HttpGet]
         [Authorize(Policy = "Admin")]
-        public IEnumerable <User> Get(string? token)///////למה קיבל טוקן
+        public IEnumerable <User> Get(string? token)
         {
             return userService.GetAll();
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "User")]/////אם צריך 
+        [Authorize(Policy = "User")]
         public ActionResult<User> Get(int id)
         {
-            string? jwtEncoded = Request.Headers.Authorization;////אולי להפוך משתנה מחלקה
+            string? jwtEncoded = Request.Headers.Authorization;
             var user = userService.Get(id,jwtEncoded);
             if (user == null)
                 return NotFound();

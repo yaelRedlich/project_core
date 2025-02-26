@@ -14,7 +14,7 @@ if (token) {
     showUserName(userId);
 }
 
-function showUserName(id){
+function showUserName(id) {
     const userName = document.getElementById('userName');
     fetch(`${uriUser}/${id}`,{
         method: 'GET',
@@ -33,6 +33,35 @@ function showUserName(id){
         console.log(data);
         userName.innerHTML=data.username});
 }
+
+function filterByID(){
+    let idItem = document.getElementById('filter').value;
+    idItem = parseInt(idItem);
+    fetch(`${uri}/${idItem}`,{
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json'
+        }
+    })
+    .then(response=>{
+        if(!response.ok){
+            console.log(response);
+            alert("לא קיים ספר כזה במערכת");
+            getItems();
+            return;
+
+        }
+        return response.json();
+    })
+    .then(data => {
+        let Data = [];
+        Data[0] = data
+        _displayItems(Data)
+    })
+    .catch(error => console.log(error.message));
+}
+
 
 function getItems() {
     fetch(uri, {

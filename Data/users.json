@@ -1,3 +1,4 @@
+
 [
   {
     "UserId": 0,
@@ -6,9 +7,15 @@
     "isAdmin": true
   },
   {
+    "UserId": 1,
+    "Username": "david",
+    "Password": "DAVID157",
+    "isAdmin": false
+  },
+  {
     "UserId": 2,
     "Username": "hadasa",
-    "Password": "1234",
+    "Password": "327804233",
     "isAdmin": false
   },
   {
@@ -18,15 +25,39 @@
     "isAdmin": false
   },
   {
+    "UserId": 4,
+    "Username": "moshe",
+    "Password": "@567aq",
+    "isAdmin": true
+  },
+  {
+    "UserId": 5,
+    "Username": "noa",
+    "Password": "32456noa",
+    "isAdmin": false
+  },
+  {
     "UserId": 6,
-    "Username": "vvbn",
-    "Password": "5474",
+    "Username": "shir",
+    "Password": "shirshir2",
+    "isAdmin": false
+  },
+  {
+    "UserId": 7,
+    "Username": "eli",
+    "Password": "6789",
     "isAdmin": false
   },
   {
     "UserId": 8,
-    "Username": "vvbn",
-    "Password": "6797",
+    "Username": "miriam",
+    "Password": "7890",
+    "isAdmin": true
+  },
+  {
+    "UserId": 9,
+    "Username": "shlomi",
+    "Password": "s1h2l3o4m5i",
     "isAdmin": false
   }
 ]

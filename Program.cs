@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -21,28 +20,22 @@ builder.Services.AddAuthentication(options =>
         cfg.RequireHttpsMetadata = false;
         cfg.TokenValidationParameters = TokenService.GetTokenValidationParameters();
     });
-//nowwwww
-// builder.Services.AddAuthorization(cfg =>
-//     {
-//         cfg.AddPolicy("Admin", policy => policy.RequireClaim("isAdmin", "Admin"));
-//         cfg.AddPolicy("User", policy => policy.RequireClaim("isAdmin", "User", "Admin"));
-//     });
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5073); // HTTP
+    options.ListenAnyIP(5074, listenOptions =>
+    {
+        listenOptions.UseHttps(); // HTTPS
+    });
+});
 
 builder.Services.AddAuthorization(cfg =>
     {
         cfg.AddPolicy("Admin", policy => policy.RequireClaim("isAdmin", "true"));
         cfg.AddPolicy("User", policy => policy.RequireClaim("isAdmin", "true", "false"));
     });
-
-
-//     services.AddAuthorization(options =>
-// {
-//     options.AddPolicy("Admin", policy => policy.RequireClaim("isAdmin", "Admin"));
-//     options.AddPolicy("User", policy => policy.RequireClaim("isAdmin", "User", "Admin"));
-// });
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
     {
@@ -63,13 +56,11 @@ builder.Services.AddSwaggerGen(c =>
         }
         });
     });
-
 Log.Logger = new LoggerConfiguration()
    .WriteTo.Console()
-    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day) // תיקייה log-.txt עם קובץ חדש כל יום
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 builder.Host.UseSerilog();
-
 builder.Services.AddControllers();
 builder.Services.AddBookService();
 builder.Services.AddUserService();
@@ -82,20 +73,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseHttpsRedirection();
 app.UseLoggerMiddlewates();
 app.UseErrorHandlingMiddleware();
-/*js*/
 app.UseDefaultFiles();
 app.UseStaticFiles();
-/*js (remove "launchUrl" from Properties\launchSettings.json*/
-
-app.UseHttpsRedirection();
-app.UseAuthentication();  // ✅ הוספנו את זה לפני Authorization
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseHttpsRedirection();
 app.MapControllers();
-
 app.Run();
 
 

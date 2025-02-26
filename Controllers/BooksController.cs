@@ -8,7 +8,6 @@ using project.Interfaces;
 [ApiController]
 [Route("[controller]")]
 [Authorize]
-
 public class BooksController : ControllerBase
 {
    private IBookService bookService;
@@ -36,9 +35,7 @@ public class BooksController : ControllerBase
    [HttpPost]
    public ActionResult Insert(Book nb)
    {
-      //  string? jwtEncoded = Request.Headers.Authorization;
       string? jwtEncoded = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-
       bookService.Add(nb, jwtEncoded);
       return CreatedAtAction(nameof(Insert), new { id = nb.Id }, nb);
    }

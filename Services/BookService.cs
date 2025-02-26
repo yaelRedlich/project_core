@@ -15,7 +15,7 @@ namespace project_core.Services
     {
         private readonly string _filePath = "Books.json";
         List<Book> listbooks { get; }
-        int nextId = 4;
+        int nextId = 23;
 
         public BookService()
         {
@@ -24,22 +24,23 @@ namespace project_core.Services
             nextId = listbooks.Any() ? listbooks.Max(b => b.Id) + 1 : 1;
         }
 
-        //  public IEnumerable <Book> GetAll (string ? token) => listbooks.Where((book)=>book.UserId==int.Parse(TokenService.decodedToken(token)));
+
         public IEnumerable<Book> GetAll(string? token)
         {
             int userId = int.Parse(TokenService.decodedToken(token, "UserId"));
             bool isAdmin = bool.Parse(TokenService.decodedToken(token, "isAdmin"));
-            if (isAdmin) // אם המשתמש הוא מנהל, נחזיר את כל הספרים
+            if (isAdmin) 
             {
                 return listbooks;
             }
-
-            // אחרת, נחזיר רק את הספרים של המשתמש
             return listbooks.Where(book => book.UserId == userId);
+            
         }
 
         public Book Get(int id, string? token)
         {
+            if (string.IsNullOrEmpty(token)) 
+               throw new UnauthorizedAccessException("לא נמצא טוקן");
             var book = listbooks.FirstOrDefault(b => b.Id == id);
             bool isAdmin = bool.Parse(TokenService.decodedToken(token, "isAdmin"));
 
@@ -61,8 +62,9 @@ namespace project_core.Services
         public void Delete(int id, string? token)
         {
             int userId = int.Parse(TokenService.decodedToken(token));
+            bool isAdmin =bool.Parse(TokenService.decodedToken(token,"isAdmin"));
             var book = Get(id, token);
-            if (book == null || userId != book.UserId)
+            if (book == null || (!isAdmin && book.UserId != userId))
             {
                 throw new Exception("אינך מורה לגשת לאזור זה ");
             }
@@ -79,8 +81,8 @@ namespace project_core.Services
         public void Update(int id, Book newBook, string? token)
         {
             int userId = int.Parse(TokenService.decodedToken(token));
-            var index = listbooks.FindIndex(b => b.Id == newBook.Id);
             bool isAdmin =bool.Parse(TokenService.decodedToken(token,"isAdmin"));
+            var index = listbooks.FindIndex(b => b.Id == newBook.Id);
             if (index == -1)
                 return;
             if ((listbooks[index].UserId != userId && !isAdmin) || (newBook.UserId != listbooks[index].UserId && !isAdmin))
