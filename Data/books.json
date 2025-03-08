@@ -1,4 +1,3 @@
-
 [
   {
     "Id": 1,
@@ -17,12 +16,6 @@
     "Name": "The Mystery of the Lost City",
     "Category": 3,
     "UserId": 2
-  },
-  {
-    "Id": 4,
-    "Name": "The Rise and Fall of Ancient Civilizations",
-    "Category": 4,
-    "UserId": 3
   },
   {
     "Id": 5,
@@ -119,11 +112,5 @@
     "Name": "The Shadow in the Fog",
     "Category": 3,
     "UserId": 5
-  },
-  {
-    "Id": 21,
-    "Name": "Ancient Rome: The Glory and the Fall",
-    "Category": 5,
-    "UserId": 9
   }
 ]

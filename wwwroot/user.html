@@ -18,7 +18,22 @@
         <input type="checkbox" id="add-role">
         <input type="submit" value="Add">
     </form>
-
+    
+    <div id="editForm" style="display:none;">
+        <h3>Edit User</h3>
+        <form action="javascript:void(0);" onsubmit="updateItem()">
+            <input type="hidden" id="edit-id">
+            <input type="text" id="edit-name" placeholder="Username">
+            <input type="password" id="edit-password" placeholder="Password">
+            <div id="admin-section" style="display: none;">  
+                <label for="edit-role">Admin</label>
+                <input type="checkbox" id="edit-role">
+            </div>
+            <input type="submit" value="Save">
+            <a onclick="document.getElementById('editForm').style.display='none'" aria-label="Close">&#10006;</a>
+        </form>
+    </div>
+    
     <h3>Users List</h3>
     <table>
         <thead>
@@ -27,7 +42,8 @@
                 <th>Username</th>
                 <th>Password</th>
                 <th>Role (Admin)</th>
-                <th>Actions</th>
+                <th>Delete</th>
+                <th>Update</th>
             </tr>
         </thead>
         <tbody id="users"></tbody>

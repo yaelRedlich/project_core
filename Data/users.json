@@ -1,4 +1,3 @@
-
 [
   {
     "UserId": 0,
@@ -53,11 +52,5 @@
     "Username": "miriam",
     "Password": "7890",
     "isAdmin": true
-  },
-  {
-    "UserId": 9,
-    "Username": "shlomi",
-    "Password": "s1h2l3o4m5i",
-    "isAdmin": false
   }
 ]

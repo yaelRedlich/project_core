@@ -4,37 +4,47 @@ const uriUser='/User'
 let books = [];
 let token = sessionStorage.getItem('token');
 let currUser;
+
+const showUserName = (id) => {
+    const userName = document.getElementById('userName');
+    fetch(`${uriUser}/${id}`, {
+        method: 'GET',
+        headers: {
+            'Authorization':` Bearer ${token}`,
+            'Accept': 'application/json'
+        }
+    })
+         .then(response => {
+            if (!response.ok) {
+                throw new Error("Access denied! The user may not be logged in.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            startName = document.getElementById('startName').innerHTML = data.username.charAt(0);
+            profileName = document.getElementById('profileName').innerHTML = data.username
+            userName.innerHTML = data.username;
+            document.getElementById('edit-username').value = data.username; 
+        })
+        .catch(error => console.error('Error getting username:', error));
+    }
 if (token) {
     const payload = token.split('.')[1];
     const decodedPayload = atob(payload);
     const jsonPayload = JSON.parse(decodedPayload);
     const userId = parseInt(jsonPayload.UserId, 10);
-    jsonPayload.UserId=userId;
-    currUser=userId;
+    jsonPayload.UserId = userId;
+    currUser = userId;
     showUserName(userId);
 }
-
-function showUserName(id) {
-    const userName = document.getElementById('userName');
-    fetch(`${uriUser}/${id}`,{
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/json'
-        }
-    })
-    .then(response=>{
-        if (!response.ok) {
-            throw new Error("הגישה נדחתה! ייתכן שהמשתמש אינו מחובר.");
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        userName.innerHTML=data.username});
+else {
+    location.href="index.html";
 }
 
-function filterByID(){
+
+
+
+const filterByID = () => {
     let idItem = document.getElementById('filter').value;
     idItem = parseInt(idItem);
     fetch(`${uri}/${idItem}`,{
@@ -44,10 +54,10 @@ function filterByID(){
             'Accept': 'application/json'
         }
     })
-    .then(response=>{
+    .then(response =>{
         if(!response.ok){
             console.log(response);
-            alert("לא קיים ספר כזה במערכת");
+            alert("No such book exists.");
             getItems();
             return;
 
@@ -63,7 +73,7 @@ function filterByID(){
 }
 
 
-function getItems() {
+const getItems = () =>{
     fetch(uri, {
         method: 'GET',
         headers: {
@@ -73,7 +83,7 @@ function getItems() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error("הגישה נדחתה! ייתכן שהמשתמש אינו מחובר.");
+                throw new Error("Access denied! The user may not be logged in.");
             }
             return response.json();
         })
@@ -81,7 +91,7 @@ function getItems() {
         .catch(error => alert(error.message));
 }
 
-function addItem() {
+const addItem = () =>{
     const addNameTextbox = document.getElementById('add-name');
     const addCategorySelect = document.getElementById('add-category');
 
@@ -108,7 +118,57 @@ function addItem() {
         .catch(error => console.error('Unable to add item.', error));
 }
 
-function deleteItem(id) {
+const saveChanges = () =>{
+    if (!isTokenValid(token)) {
+        alert("You have been disconnected! Please reconnect.");
+        location.href = "index.html";
+        return;
+    }
+    const newUsername = document.getElementById('edit-username').value.trim();
+    const newPassword = document.getElementById('edit-password').value.trim();
+
+    if (!newUsername || !newPassword) {
+        alert("Please fill in all fields");
+            return;
+    }
+    const payload = token.split('.')[1];
+    const decodedPayload = atob(payload);
+    const jsonPayload = JSON.parse(decodedPayload);
+   const isAdmin = JSON.parse(jsonPayload.isAdmin);
+    const updatedUser = {
+        userId: currUser,
+        username: newUsername,
+        password: newPassword,
+        isAdmin :isAdmin             
+    };
+    fetch(`${uriUser}/${currUser}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization':` Bearer ${token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Update failed, try again.");
+            }
+            return response.text();
+        })
+        .then(() => {
+            toggleEdit();
+            showUserName(currUser); 
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+}
+
+
+const deleteItem = (id) => {
+    if(!isTokenValid(token))
+        location.href="index.html";  
     fetch(`${uri}/${id}`, {
         method: 'DELETE',
         headers:{
@@ -119,7 +179,9 @@ function deleteItem(id) {
         .catch(error => console.error('Unable to delete item.', error));
 }
 
-function displayEditForm(id) {
+const displayEditForm = (id) => {
+    if(!isTokenValid(token))
+        location.href="index.html";  
     const item = books.find(item => item.id === id);
     if (!item) {
         console.error('Item not found');
@@ -132,7 +194,7 @@ function displayEditForm(id) {
     document.getElementById('editForm').style.display = 'block';
 }
 
-function updateItem() {
+const updateItem = () => {
     const itemId = document.getElementById('edit-id').value;
     const itemName = document.getElementById('edit-name').value.trim();
     const itemCategory = parseInt(document.getElementById('edit-category').value, 10);
@@ -147,8 +209,6 @@ function updateItem() {
         category:parseInt(itemCategory) ,
         UserId:parseInt(currUser) 
     };
-    alert(item.id +"\n" +item.name+"\n"+item.category+"\n"+item.UserId)
-
     fetch(`${uri}/${itemId}`, {
         method: 'PUT',
         headers: {
@@ -165,17 +225,17 @@ function updateItem() {
         .catch(error => console.error('Unable to update item.', error));
 }
 
-function closeInput() {
+const closeInput = () =>{
     document.getElementById('editForm').style.display = 'none';
 }
 
-function _displayCount(itemCount) {
+const _displayCount = (itemCount) => {
     const name = (itemCount === 1) ? 'Book' : 'books kinds';
 
     document.getElementById('counter').innerText = `${itemCount} ${name}`;
 }
 
-function _displayItems(data) {
+const _displayItems = (data) => {
     const tBody = document.getElementById('books');
     tBody.innerHTML = '';
 
@@ -187,29 +247,42 @@ function _displayItems(data) {
     data.forEach(item => {
         let categor = document.createElement('label');
         categor.textContent = arrCategory[item.category] || 'Unknown';
-
         let editButton = button.cloneNode(false);
         editButton.innerText = 'Edit';
         editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
-
         let deleteButton = button.cloneNode(false);
         deleteButton.innerText = 'Delete';
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
-
         let tr = tBody.insertRow();
-
         let td1 = tr.insertCell(0);
         td1.appendChild(categor);
-
         let td2 = tr.insertCell(1);
         td2.appendChild(document.createTextNode(item.name));
-
         let td3 = tr.insertCell(2);
         td3.appendChild(editButton);
-
         let td4 = tr.insertCell(3);
         td4.appendChild(deleteButton);
     });
 
     books = data;
+}
+const toggleEdit = () => {
+    let editForm = document.getElementById("editProfile");
+    if (editForm.style.display === "none" || editForm.style.display === "") {
+        editForm.style.display = "block";
+    } else {
+        editForm.style.display = "none";
+    }
+}
+
+const isTokenValid = (token) => {
+    if (!token) 
+        return false; 
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1])); 
+        const expiry = payload.exp * 1000; 
+        return expiry > Date.now(); 
+    } catch (error) {
+        return false; 
+    }
 }

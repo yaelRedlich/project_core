@@ -108,3 +108,86 @@ input[type="submit"]:hover {
 #editForm {
     display: none;
 }
+
+/* //////////////////////////////////////////// */
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 80px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.user-profile:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    background: #5d94d8;
+    color: #1f3a5f;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-transform: uppercase;
+}
+
+.username {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* טופס עריכת הפרופיל */
+.edit-profile {
+    display: none;
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: right;
+}
+
+.edit-profile input {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.edit-profile button {
+    width: 100%;
+    padding: 6px;
+    margin-top: 10px;
+    background: #0078D4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.edit-profile button:hover {
+    background: #005fa3;
+}

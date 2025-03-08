@@ -14,7 +14,6 @@ const login = async (name, passWord) => {
         "Password": passWord,
         "isAdmin": false
     };
-
     try {
         const response = await fetch(uri, {
             method: 'POST',
@@ -26,7 +25,7 @@ const login = async (name, passWord) => {
         });
 
         if (!response.ok) { 
-            alert("שם משתמש או סיסמה שגויים!");
+            alert("Incorrect username or password!");
             return;
         }
 
@@ -34,7 +33,7 @@ const login = async (name, passWord) => {
         const cleanToken = text.replace(/"/g, ''); 
 
         if (!cleanToken) { 
-            alert("שם משתמש או סיסמה שגויים!");
+            alert("Incorrect username or password!");
             return;
         } 
         sessionStorage.setItem('token', cleanToken); 
@@ -47,7 +46,7 @@ const login = async (name, passWord) => {
             location.href = "book.html"; 
 
     } catch (error) {
-        console.error('שגיאה בהתחברות:', error);
-        alert("שגיאה בהתחברות, נסה שוב מאוחר יותר.");
+        console.error('Login error', error);
+        alert("Login error, please try again later.");
     }
 }

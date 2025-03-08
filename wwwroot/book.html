@@ -7,8 +7,25 @@
     <title>Book CRUD</title>
     <link rel="stylesheet" href="css/site.css" />
 </head>
-
 <body>
+   
+    
+    <div class="user-profile" onclick="toggleEdit()">
+        <div class="avatar" id="startName"></div>
+        <p class="username" id="profileName"></p>
+    </div>
+    <div class="edit-profile" id="editProfile">
+        <h3>edit profile</h3>
+        <label for="edit-username">User name:</label>
+        <input type="text" id="edit-username" value="BB1234">
+        
+        <label for="edit-password">Password:</label>
+        <input type="password" id="edit-password" placeholder="******">
+        
+        <button onclick="saveChanges()">Save</button>
+        <button onclick="toggleEdit()">Cancel</button>
+    </div>
+    
     <h4>hello user <span id="userName"></span></h4>
     <h1>Book CRUD</h1>
     <h3>Add</h3>

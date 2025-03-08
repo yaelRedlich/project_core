@@ -28,3 +28,5 @@ wwwroot/publish/
 # Ignore environment settings
 .env
 .env.*
+
+/publish/

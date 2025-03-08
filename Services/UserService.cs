@@ -23,8 +23,8 @@ namespace project_core.Services
         }
         public  ActionResult<String>? Login(User user)
         {
-            var findUser = listUsers.FirstOrDefault(u => u.Username == user.Username);
-            if (findUser == null || !user.Password.Equals(findUser.Password))
+            var findUser = listUsers.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
+            if (findUser == null)
             {
                 return null;
             }
@@ -67,12 +67,15 @@ namespace project_core.Services
             FileHelper<User>.WriteToJson(listUsers);
         }
 
-        public void Update(int id, User user, string? token)
+        public void Update (int id, User user, string? token)
         {
             string userId = TokenService.decodedToken(token);
-            if(userId != id+"" ||user.UserId+"" != userId){
-                return;
+            string isAdmin = TokenService.decodedToken(token , "isAdmin");
+            if(isAdmin=="false" && (userId != id+"" || user.UserId+"" != userId)){
+                   throw new Exception("You cannot change your access permissions.");
             }
+             if(user.isAdmin==true  && isAdmin=="false" )
+               throw new Exception("You cannot change your access permissions.");
             var index = listUsers.FindIndex(u => u.UserId == user.UserId);
             if (index == -1)
                 throw new KeyNotFoundException($"User with ID {user.UserId} does not exist.");

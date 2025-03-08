@@ -17,6 +17,7 @@ namespace project.Controllers
             this.userService = userService;
             this.bookService = bookService;
         }
+        
 
         [HttpPost]
         [Route("[action]")]
@@ -39,7 +40,7 @@ namespace project.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Policy = "User")]
-        public ActionResult<User> Get(int id)
+        public ActionResult <User> Get(int id)
         {
             string? jwtEncoded = Request.Headers.Authorization;
             var user = userService.Get(id,jwtEncoded);
@@ -54,6 +55,13 @@ namespace project.Controllers
         {
             userService.Add(user);
             return CreatedAtAction(nameof(Insert), new { id = user.UserId }, user);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Update(int id,User user){
+            string? jwtEncoded = Request.Headers.Authorization; 
+            userService.Update( id, user, jwtEncoded);
+             return NoContent();
         }
 
         [HttpDelete("{id}")]
