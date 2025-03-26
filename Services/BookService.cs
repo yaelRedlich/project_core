@@ -27,8 +27,8 @@ namespace project_core.Services
 
         public IEnumerable<Book> GetAll(string? token)
         {
-            int userId = int.Parse(TokenService.decodedToken(token, "UserId"));
-            bool isAdmin = bool.Parse(TokenService.decodedToken(token, "isAdmin"));
+            int userId = int.Parse(TokenService.DecodeToken(token, "UserId"));
+            bool isAdmin = bool.Parse(TokenService.DecodeToken(token, "isAdmin"));
             if (isAdmin) 
             {
                 return listbooks;
@@ -42,9 +42,9 @@ namespace project_core.Services
             if (string.IsNullOrEmpty(token)) 
                throw new UnauthorizedAccessException("לא נמצא טוקן");
             var book = listbooks.FirstOrDefault(b => b.Id == id);
-            bool isAdmin = bool.Parse(TokenService.decodedToken(token, "isAdmin"));
+            bool isAdmin = bool.Parse(TokenService.DecodeToken(token, "isAdmin"));
 
-            if (book == null || (!isAdmin && book.UserId != int.Parse(TokenService.decodedToken(token))))
+            if (book == null || (!isAdmin && book.UserId != int.Parse(TokenService.DecodeToken(token,"UserId"))))
             {
                 throw new IndexOutOfRangeException($"Book with ID {id} does not exist.");
             }
@@ -53,7 +53,7 @@ namespace project_core.Services
         public void Add(Book book, string? token)
         {
             book.Id = nextId++;
-            book.UserId = int.Parse(TokenService.decodedToken(token));
+            book.UserId = int.Parse(TokenService.DecodeToken(token,"UserId"));
             listbooks.Add(book);
             FileHelper<Book>.WriteToJson(listbooks);
 
@@ -61,8 +61,8 @@ namespace project_core.Services
 
         public void Delete(int id, string? token)
         {
-            int userId = int.Parse(TokenService.decodedToken(token));
-            bool isAdmin =bool.Parse(TokenService.decodedToken(token,"isAdmin"));
+            int userId = int.Parse(TokenService.DecodeToken(token,"UserId"));
+            bool isAdmin =bool.Parse(TokenService.DecodeToken(token,"isAdmin"));
             var book = Get(id, token);
             if (book == null || (!isAdmin && book.UserId != userId))
             {
@@ -80,8 +80,8 @@ namespace project_core.Services
 
         public void Update(int id, Book newBook, string? token)
         {
-            int userId = int.Parse(TokenService.decodedToken(token));
-            bool isAdmin =bool.Parse(TokenService.decodedToken(token,"isAdmin"));
+            int userId = int.Parse(TokenService.DecodeToken(token,"UserId"));
+            bool isAdmin =bool.Parse(TokenService.DecodeToken(token,"isAdmin"));
             var index = listbooks.FindIndex(b => b.Id == newBook.Id);
             if (index == -1)
                 return;

@@ -28,7 +28,6 @@ namespace project_core.Services
             {
                 return null;
             }
-            
             var claims = new List<Claim>
             {
                 new Claim("UserId", findUser.UserId+""),
@@ -39,12 +38,14 @@ namespace project_core.Services
             var token = TokenService.GetToken(claims);
             return new OkObjectResult(TokenService.WriteToken(token));
         }
+    
+
         public IEnumerable  <User> GetAll() => listUsers;
 
         public User Get(int id,string ? token)
         {
-            string userId = TokenService.decodedToken(token);
-            string isAdmin =TokenService.decodedToken(token,"isAdmin");
+            string userId = TokenService.DecodeToken(token,"UserId");
+            string isAdmin =TokenService.DecodeToken(token,"isAdmin");
             var user = listUsers.FirstOrDefault(u => u.UserId == id);
             if (user == null || (userId != id + "" && isAdmin=="false" ))
                  throw new IndexOutOfRangeException($"user with ID {id} does not exist.");
@@ -69,9 +70,10 @@ namespace project_core.Services
 
         public void Update (int id, User user, string? token)
         {
-            string userId = TokenService.decodedToken(token);
-            string isAdmin = TokenService.decodedToken(token , "isAdmin");
+            string userId = TokenService.DecodeToken(token,"UserId");
+            string isAdmin = TokenService.DecodeToken(token , "isAdmin");
             if(isAdmin=="false" && (userId != id+"" || user.UserId+"" != userId)){
+
                    throw new Exception("You cannot change your access permissions.");
             }
              if(user.isAdmin==true  && isAdmin=="false" )

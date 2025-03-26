@@ -68,11 +68,13 @@ const getItems = () => {
 const addItem = () =>{
     const addUsernameTextbox = document.getElementById('add-username');
     const addPasswordTextbox = document.getElementById('add-password');
+    const addMail = document.getElementById('add-mail');
     const addRoleCheckbox = document.getElementById('add-role');
 
     const item = {
         username: addUsernameTextbox.value.trim(),
         password: addPasswordTextbox.value.trim(),
+        email : addMail.value.trim(),
         isAdmin: addRoleCheckbox.checked
     };
 
@@ -90,6 +92,7 @@ const addItem = () =>{
             getItems();
             addUsernameTextbox.value = '';
             addPasswordTextbox.value = '';
+            addMail.value= '';
             addRoleCheckbox.checked = false;
         })
         .catch(error => console.error('Unable to add item.', error));
@@ -115,12 +118,14 @@ const updateItem =() => {
     const userId = document.getElementById('edit-id').value;
     const userName = document.getElementById('edit-name').value.trim();
     const password = document.getElementById('edit-password').value.trim();
+    const mail = document.getElementById('edit-mail').value.trim();
     const isAdmin = document.getElementById('edit-role').checked;
 
     const user = {
         userId : userId,
         username: userName,
         password: password,
+        email: mail,
         isAdmin: isAdmin
     };
     fetch(`${uri}/${userId}`, {
@@ -169,16 +174,24 @@ const _displayItems = (data) => {
         let tr = tBody.insertRow();
         let td1 = tr.insertCell(0);
         td1.appendChild(document.createTextNode(item.userId));
+
         let td2 = tr.insertCell(1);
         td2.appendChild(document.createTextNode(item.username));
+
         let td3 = tr.insertCell(2);
         td3.appendChild(document.createTextNode(item.password));
-        let td4 = tr.insertCell(3);
-        td4.appendChild(role);
+
+        let td4 = tr.insertCell(3);  
+        td4.appendChild(document.createTextNode(item.email)); 
+
         let td5 = tr.insertCell(4);
-        td5.appendChild(deleteButton);
+        td5.appendChild(role);
+
         let td6 = tr.insertCell(5);
-        td6.appendChild(updataButton);
+        td6.appendChild(deleteButton);
+
+        let td7 = tr.insertCell(6);
+        td7.appendChild(updataButton);
     });
     users = data;
     

@@ -28,17 +28,10 @@ namespace project_core.Services
         };
 
         public static string WriteToken(SecurityToken token) =>
-            new JwtSecurityTokenHandler().WriteToken(token);
-        public static string decodedToken(string? token)
-        {
-            if (token != null)
-                token = token.Replace("Bearer ", "");
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            var jwtSecurityToken = handler.ReadJwtToken(token);
-            string id = jwtSecurityToken.Claims.First(claim => claim.Type == "UserId").Value;
-            return id;
-        }
-        public static string decodedToken(string? token, string claimType)
+           new JwtSecurityTokenHandler().WriteToken(token);
+
+       
+        public static string DecodeToken(string? token, string claimType)
         {
               if (token != null)
                 token = token.Replace("Bearer ", "");

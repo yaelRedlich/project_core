@@ -8,25 +8,59 @@ using project_core.Middlewares;
 using Serilog;
 using Serilog.Events;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(options =>
     {
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
     })
     .AddJwtBearer(cfg =>
     {
         cfg.RequireHttpsMetadata = false;
         cfg.TokenValidationParameters = TokenService.GetTokenValidationParameters();
+    })
+
+
+   .AddCookie(options =>
+{
+        options.Cookie.SameSite = SameSiteMode.None; 
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.LoginPath = "/account/google-login";
+        options.AccessDeniedPath = "/account/access-denied";
+})
+
+    .AddGoogle(options =>
+    {
+        options.ClientId = "615496630298-8lb43opj1vhse725dql9aucvh1369th0.apps.googleusercontent.com";
+        options.ClientSecret = "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";
+        options.CallbackPath = "/signin-google"; 
+        options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Scope.Add("email"); 
+        options.Scope.Add("profile"); 
     });
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5073); // HTTP
-    options.ListenAnyIP(5074, listenOptions =>
+        options.ListenAnyIP(5073);
+        options.ListenAnyIP(5074, listenOptions =>
+        {
+            listenOptions.UseHttps();
+        });
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
     {
-        listenOptions.UseHttps(); // HTTPS
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod() 
+              .AllowAnyHeader();
+
     });
 });
 
@@ -60,6 +94,7 @@ Log.Logger = new LoggerConfiguration()
    .WriteTo.Console()
     .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
+
 builder.Host.UseSerilog();
 builder.Services.AddControllers();
 builder.Services.AddBookService();
@@ -73,11 +108,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAll");
+
 app.UseHttpsRedirection();
 app.UseLoggerMiddlewates();
 app.UseErrorHandlingMiddleware();
 app.UseDefaultFiles();
 app.UseStaticFiles();
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Content-Security-Policy", "frame-ancestors 'self' https://accounts.google.com");
+    await next();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();

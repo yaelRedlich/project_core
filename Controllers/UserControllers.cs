@@ -17,10 +17,11 @@ namespace project.Controllers
             this.userService = userService;
             this.bookService = bookService;
         }
-        
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
+
         public ActionResult<String>? Login([FromBody] User user)
         {
             var result = userService.Login(user);
@@ -33,17 +34,17 @@ namespace project.Controllers
 
         [HttpGet]
         [Authorize(Policy = "Admin")]
-        public IEnumerable <User> Get(string? token)
+        public IEnumerable<User> Get(string? token)
         {
             return userService.GetAll();
         }
 
         [HttpGet("{id}")]
         [Authorize(Policy = "User")]
-        public ActionResult <User> Get(int id)
+        public ActionResult<User> Get(int id)
         {
             string? jwtEncoded = Request.Headers.Authorization;
-            var user = userService.Get(id,jwtEncoded);
+            var user = userService.Get(id, jwtEncoded);
             if (user == null)
                 return NotFound();
             return user;
@@ -58,10 +59,11 @@ namespace project.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id,User user){
-            string? jwtEncoded = Request.Headers.Authorization; 
-            userService.Update( id, user, jwtEncoded);
-             return NoContent();
+        public ActionResult Update(int id, User user)
+        {
+            string? jwtEncoded = Request.Headers.Authorization;
+            userService.Update(id, user, jwtEncoded);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -69,7 +71,7 @@ namespace project.Controllers
         public ActionResult Delete(int id)
         {
             string? jwtEncoded = Request.Headers.Authorization;
-            var foundUser = userService.Get(id,jwtEncoded);
+            var foundUser = userService.Get(id, jwtEncoded);
             if (foundUser is null)
                 return NotFound();
             userService.Delete(id);

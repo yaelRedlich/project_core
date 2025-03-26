@@ -14,6 +14,7 @@
     <form action="javascript:void(0);" onsubmit="addItem()">
         <input type="text" id="add-username" placeholder="Username" required>
         <input type="password" id="add-password" placeholder="Password" required>
+        <input type="email" id="add-mail" placeholder="Mail" required>
         <label for="add-role">Admin</label>
         <input type="checkbox" id="add-role">
         <input type="submit" value="Add">
@@ -25,6 +26,7 @@
             <input type="hidden" id="edit-id">
             <input type="text" id="edit-name" placeholder="Username">
             <input type="password" id="edit-password" placeholder="Password">
+            <input type="email" id="edit-mail" placeholder="Mail" required>
             <div id="admin-section" style="display: none;">  
                 <label for="edit-role">Admin</label>
                 <input type="checkbox" id="edit-role">
@@ -41,6 +43,7 @@
                 <th>ID</th>
                 <th>Username</th>
                 <th>Password</th>
+                <th>Mail</th> 
                 <th>Role (Admin)</th>
                 <th>Delete</th>
                 <th>Update</th>

@@ -7,6 +7,7 @@ let currUser;
 
 const showUserName = (id) => {
     const userName = document.getElementById('userName');
+    
     fetch(`${uriUser}/${id}`, {
         method: 'GET',
         headers: {
@@ -42,8 +43,6 @@ else {
 }
 
 
-
-
 const filterByID = () => {
     let idItem = document.getElementById('filter').value;
     idItem = parseInt(idItem);
@@ -56,7 +55,6 @@ const filterByID = () => {
     })
     .then(response =>{
         if(!response.ok){
-            console.log(response);
             alert("No such book exists.");
             getItems();
             return;
@@ -126,7 +124,7 @@ const saveChanges = () =>{
     }
     const newUsername = document.getElementById('edit-username').value.trim();
     const newPassword = document.getElementById('edit-password').value.trim();
-
+    const newEmail = document.getElementById('edit-email').value.trim();
     if (!newUsername || !newPassword) {
         alert("Please fill in all fields");
             return;
@@ -139,6 +137,7 @@ const saveChanges = () =>{
         userId: currUser,
         username: newUsername,
         password: newPassword,
+        email : newEmail,
         isAdmin :isAdmin             
     };
     fetch(`${uriUser}/${currUser}`, {

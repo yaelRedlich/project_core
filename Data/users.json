@@ -3,54 +3,70 @@
     "UserId": 0,
     "Username": "yael",
     "Password": "111",
+    "Email": "yael054859@gmail.com",
     "isAdmin": true
   },
   {
     "UserId": 1,
     "Username": "david",
     "Password": "DAVID157",
+    "Email": "yaela055674@gmail.com",
     "isAdmin": false
   },
   {
     "UserId": 2,
     "Username": "hadasa",
     "Password": "327804233",
+    "Email": "yael054859@gmail.com",
     "isAdmin": false
   },
   {
     "UserId": 3,
     "Username": "rut",
     "Password": "12345",
+    "Email": "rut@gmail.com",
     "isAdmin": false
   },
   {
     "UserId": 4,
     "Username": "moshe",
     "Password": "@567aq",
+    "Email": "moshemosh@gmail.com",
     "isAdmin": true
   },
   {
     "UserId": 5,
     "Username": "noa",
     "Password": "32456noa",
+    "Email": "noa@gmail.com",
     "isAdmin": false
   },
   {
     "UserId": 6,
     "Username": "shir",
     "Password": "shirshir2",
+    "Email": "shir@gmail.com",
     "isAdmin": false
   },
   {
     "UserId": 7,
     "Username": "eli",
     "Password": "6789",
+    "Email": "eli324@gmail.com",
     "isAdmin": false
   },
   {
     "UserId": 8,
     "Username": "miriam",
     "Password": "7890",
+    "Email": "miriam1234@gmail.com",
     "isAdmin": true
+  },
+  {
+    "UserId": 9,
+    "Username": "tamar",
+    "Password": "111",
+    "Email": "tamar123@gmail.com",
+    "isAdmin": false
   }
 ]
